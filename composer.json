@@ -1,0 +1,35 @@
+{
+  "name" : "los/hermes",
+  "require" : {
+    "roave/security-advisories" : "dev-master",
+    "zendframework/zend-expressive" : "1.0.0rc2",
+    "zendframework/zend-stdlib" : "~2.7",
+    "zendframework/zend-expressive-fastroute" : "^0.2",
+    "zendframework/zend-servicemanager" : "^2.5",
+    "ocramius/proxy-manager" : "^1.0"
+  },
+  "require-dev" : {
+    "phpunit/phpunit" : "^4.8",
+    "squizlabs/php_codesniffer" : "^2.3"
+  },
+  "license" : "BSD-3-CLAUSE",
+  "autoload-dev" : {
+    "psr-4" : {
+      "HermesTest\\" : "test/"
+    }
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Hermes\\" : "src/"
+    }
+  },
+  "type" : "application",
+  "scripts" : {
+    "test" : [ "php vendor/squizlabs/php_codesniffer/scripts/phpcs", "php vendor/phpunit/phpunit/phpunit" ]
+  },
+  "homepage" : "https://github.com/Lansoweb/hermes",
+  "authors" : [ {
+    "name" : "Leandro Silva",
+    "homepage" : "http://leandrosilva.info/"
+  } ]
+}
