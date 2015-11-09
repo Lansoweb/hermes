@@ -12,7 +12,7 @@
     "phpunit/phpunit" : "^4.8",
     "squizlabs/php_codesniffer" : "^2.3"
   },
-  "license" : "BSD-3-CLAUSE",
+  "license" : "MIT",
   "autoload-dev" : {
     "psr-4" : {
       "HermesTest\\" : "test/"
