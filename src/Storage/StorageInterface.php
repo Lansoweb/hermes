@@ -3,13 +3,15 @@ namespace Hermes\Storage;
 
 interface StorageInterface
 {
-    public function get($service, $version = '');
+    public function get($key);
 
-    public function set($service, $config, $version = '');
+    public function set($key, $value);
 
-    public function getValue($service, $key, $version = '');
+    public function has($key);
 
-    public function setValue($service, $key, $value, $version = 'v');
+    public function getIndex();
 
-    public function getLatestVersion($service);
+    public function incrementIndex();
+
+    public function delete($key);
 }

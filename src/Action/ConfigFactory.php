@@ -16,7 +16,13 @@ class ConfigFactory implements AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        return $requestedName === 'Hermes\Action\GetAction' || $requestedName === 'Hermes\Action\PostAction';
+        return in_array($requestedName, [
+            GetAction::class,
+            CreateAction::class,
+            UpdateAction::class,
+            DeleteAction::class,
+            SetHeaderMiddleware::class,
+        ]);
     }
 
     /**

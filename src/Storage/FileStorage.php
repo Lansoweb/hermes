@@ -1,67 +1,35 @@
 <?php
 namespace Hermes\Storage;
 
-use Hermes\Exception\ServiceNotFoundException;
-use Hermes\Exception\VersionNotFoundException;
-
-class FileStorage implements StorageInterface
+final class FileStorage implements StorageInterface
 {
-    protected $baseDir = 'data/services';
+
+    const INDEX_FILE = '_hermes.idx';
+
+    private $baseDir = 'data/keys';
 
     public function __construct($baseDir = null)
     {
-        if (!empty($baseDir)) {
+        if (! empty($baseDir)) {
             $this->baseDir = $baseDir;
         }
 
-        if (!$this->isValid($this->baseDir)) {
+        if (! $this->isValid($this->baseDir)) {
             throw new \InvalidArgumentException(sprintf('Invalid directory "%s".', $this->baseDir));
         }
     }
 
     private function isValid($dirOrFile)
     {
-        if (!file_exists($dirOrFile)) {
+        if (! file_exists($dirOrFile)) {
             return false;
         }
 
-        if (!is_writable($dirOrFile)) {
+        if (! is_writable($dirOrFile)) {
             return false;
         }
 
         return true;
-    }
-
-    private function getLatestFile($service)
-    {
-        return $this->baseDir . DIRECTORY_SEPARATOR . $service . DIRECTORY_SEPARATOR . 'latest.version';
-    }
-
-    private function getConfigFile($service, $version)
-    {
-        $serviceDir = $this->baseDir . DIRECTORY_SEPARATOR . $service;
-
-        if (!file_exists($serviceDir)) {
-            throw new ServiceNotFoundException(sprintf('Service "%s" not found', $service));
-        }
-
-        if (empty($version)) {
-            $version = $this->getLatestVersion($service);
-        }
-
-        $filename = $serviceDir . DIRECTORY_SEPARATOR . 'config.v' . $version;
-
-        if (!file_exists($filename)) {
-            throw new VersionNotFoundException(sprintf('Version "%s" not found for service "%s"', $version, $service));
-        }
-
-        return $filename;
-    }
-
-    public function getLatestVersion($service)
-    {
-        $latest = $this->getLatestFile($service);
-        return file_exists($latest) ? (int) file_get_contents($latest) : 0;
     }
 
     /**
@@ -70,9 +38,24 @@ class FileStorage implements StorageInterface
      *
      * @see \Hermes\Storage\StorageInterface::get()
      */
-    public function get($service, $version = '')
+    public function get($key)
     {
-        return file_get_contents($this->getConfigFile($service, $version));
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . $key;
+
+        return json_decode(file_get_contents($filename), true);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Hermes\Storage\StorageInterface::has()
+     */
+    public function has($key)
+    {
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . $key;
+
+        return file_exists($filename);
     }
 
     /**
@@ -81,51 +64,90 @@ class FileStorage implements StorageInterface
      *
      * @see \Hermes\Storage\StorageInterface::set()
      */
-    public function set($service, $config, $version = 0)
+    public function set($key, $value)
     {
-        $version = (int) $version;
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . $key;
 
-        $serviceDir = $this->baseDir . DIRECTORY_SEPARATOR . $service;
-
-        if (!file_exists($serviceDir)) {
-            mkdir($serviceDir);
+        if (file_exists($filename)) {
+            $data = json_decode(file_get_contents($filename), true);
+        } else {
+            $data = [
+                'key' => $key,
+                'value' => null,
+                'createdIndex' => 0,
+                'modifiedIndex' => 0
+            ];
         }
-        $latest = $this->getLatestFile($service);
-        if (!file_exists($latest)) {
-            if ($version === 0) {
-                $version = 1;
-            }
-        } elseif ($version === 0) {
-            $version = $this->getLatestVersion($service);
-        }
-        file_put_contents($latest, $version);
+        $index = $this->incrementIndex();
 
-        if (is_array($config)) {
-            $config = json_encode($config);
-        }
+        $data = array_merge($data, $value);
 
-        return file_put_contents($serviceDir . DIRECTORY_SEPARATOR . 'config.v' . $version, $config);
+        if ($data['createdIndex'] === 0) {
+            $data['createdIndex'] = $index;
+        }
+        $data['modifiedIndex'] = $index;
+
+        file_put_contents($filename, json_encode($data));
+
+        return $data;
     }
 
     /**
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::getValue()
+     * @see \Hermes\Storage\StorageInterface::getIndex()
      */
-    public function getValue($service, $key, $version = 'v1')
+    public function getIndex()
     {
-        // TODO: Auto-generated method stub
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . self::INDEX_FILE;
+        if (! file_exists($filename)) {
+            $this->incrementIndex();
+        }
+        return file_get_contents($filename);
     }
 
     /**
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::setValue()
+     * @see \Hermes\Storage\StorageInterface::incrementIndex()
      */
-    public function setValue($service, $key, $value, $version = 'v1')
+    public function incrementIndex()
     {
-        // TODO: Auto-generated method stub
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . self::INDEX_FILE;
+        $index = 1;
+        if (!file_exists($filename)) {
+            $index = 0;
+        }
+        $fp = fopen($filename, 'cb');
+        flock($fp, LOCK_EX);
+        if ($index !== 0) {
+            $index = (int) trim(file_get_contents($filename));
+        }
+        ++ $index;
+        fwrite($fp, $index);
+        ftruncate($fp, strlen($index));
+        flock($fp, LOCK_UN);
+        fclose($fp);
+
+        return $index;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Hermes\Storage\StorageInterface::delete()
+     */
+    public function delete($key)
+    {
+        $this->incrementIndex();
+
+        $filename = $this->baseDir . DIRECTORY_SEPARATOR . $key;
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+        return true;
     }
 }

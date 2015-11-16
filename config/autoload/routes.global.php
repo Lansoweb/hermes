@@ -9,22 +9,28 @@ return [
 
     'routes' => [
         [
-            'name' => 'home',
-            'path' => '/',
-            'middleware' => Hermes\Action\HomePageAction::class,
-            'allowed_methods' => ['GET'],
-        ],
-        [
-            'name' => 'config.get',
-            'path' => '/config/{service}[/{version:\d+}]',
+            'name' => 'key.get',
+            'path' => '/key/{key:[a-zA-z0-9]{1}[a-zA-z0-9-./]*[a-zA-z0-9]{1}}',
             'middleware' => Hermes\Action\GetAction::class,
             'allowed_methods' => ['GET'],
         ],
         [
-            'name' => 'config.post',
-            'path' => '/config/{service}[/{version:\d+}]',
-            'middleware' => Hermes\Action\PostAction::class,
+            'name' => 'key.post',
+            'path' => '/key/{key:[a-zA-z0-9]{1}[a-zA-z0-9-./]*[a-zA-z0-9]{1}}',
+            'middleware' => Hermes\Action\CreateAction::class,
             'allowed_methods' => ['POST'],
+        ],
+        [
+            'name' => 'key.patch',
+            'path' => '/key/{key:[a-zA-z0-9]{1}[a-zA-z0-9-./]*[a-zA-z0-9]{1}}',
+            'middleware' => Hermes\Action\UpdateAction::class,
+            'allowed_methods' => ['PATCH','PUT'],
+        ],
+        [
+            'name' => 'key.delete',
+            'path' => '/key/{key:[a-zA-z0-9]{1}[a-zA-z0-9-./]*[a-zA-z0-9]{1}}',
+            'middleware' => Hermes\Action\DeleteAction::class,
+            'allowed_methods' => ['DELETE'],
         ],
     ],
 ];

@@ -1,5 +1,7 @@
 <?php
 
+use Hermes\Action\SetHeaderMiddleware;
+
 return [
     // This can be used to seed pre- and/or post-routing middleware
     'middleware_pipeline' => [
@@ -18,6 +20,9 @@ return [
         // An array of middleware to register after registration of the
         // routing middleware
         'post_routing' => [
+            [
+                'middleware' => SetHeaderMiddleware::class,
+            ]
             //[
             // Required:
             //    'middleware' => 'Name of middleware service, or a callable',
