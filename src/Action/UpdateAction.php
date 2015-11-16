@@ -12,11 +12,11 @@ final class UpdateAction extends AbstractAction
     {
         $key = $request->getAttribute('key');
 
-        if (!$this->keyExists($key)) {
+        if (!$this->storage->has($key)) {
             return $next($request, new JsonResponse([
                 'key' => $key,
                 'message' => "Key not found.",
-            ], 409));
+            ], 404));
         }
 
         $value = $this->getValues($request);

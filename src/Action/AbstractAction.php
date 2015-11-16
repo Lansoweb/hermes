@@ -11,8 +11,6 @@ abstract class AbstractAction implements MiddlewareInterface
 {
     protected $storage;
 
-    protected $lastResponse;
-
     public function __construct(StorageInterface $storage)
     {
         $this->storage = $storage;
@@ -44,24 +42,6 @@ abstract class AbstractAction implements MiddlewareInterface
         }
 
         return $sanitizedValue;
-    }
-
-    protected function getLastResponse()
-    {
-        return $this->lastResponse;
-    }
-
-    protected function keyExists($key)
-    {
-        if ($this->storage->has($key)) {
-            return true;
-        }
-
-        $this->lastResponse = new JsonResponse([
-            'key' => $key,
-            'message' => "Key not found.",
-        ], 404);
-        return false;
     }
 
     protected function getKeyResponse($key)

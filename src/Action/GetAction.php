@@ -4,6 +4,7 @@ namespace Hermes\Action;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\JsonResponse;
 
 final class GetAction extends AbstractAction
 {
@@ -11,8 +12,11 @@ final class GetAction extends AbstractAction
     {
         $key = $request->getAttribute('key');
 
-        if (!$this->keyExists($key)) {
-            $response = $this->lastResponse;
+        if (!$this->storage->has($key)) {
+            $response = new JsonResponse([
+                'key' => $key,
+                'message' => "Key not found.",
+            ], 404);
         } else {
             $response = $this->getKeyResponse($key);
         }

@@ -12,8 +12,11 @@ final class DeleteAction extends AbstractAction
     {
         $key = $request->getAttribute('key');
 
-        if (! $this->keyExists($key)) {
-            return $this->lastResponse;
+        if (!$this->storage->has($key)) {
+            $response = new JsonResponse([
+                'key' => $key,
+                'message' => "Key not found.",
+            ], 404);
         }
 
         $this->storage->delete($key);
