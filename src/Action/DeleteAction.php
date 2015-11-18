@@ -17,6 +17,7 @@ final class DeleteAction extends AbstractAction
                 'key' => $key,
                 'message' => "Key not found.",
             ], 404);
+            return $next($request, $response);
         }
 
         $this->storage->delete($key);

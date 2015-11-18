@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Stratigility\MiddlewareInterface;
 
-final class SetHeaderMiddleware implements MiddlewareInterface
+final class SetHeader implements MiddlewareInterface
 {
     private $storage;
 
@@ -20,6 +20,6 @@ final class SetHeaderMiddleware implements MiddlewareInterface
     {
         $index = $this->storage->getIndex();
 
-        return $response->withHeader('X-Hermes-Index', $index);
+        return $response->withAddedHeader('X-Hermes-Index', $index);
     }
 }

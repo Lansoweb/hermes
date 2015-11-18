@@ -21,13 +21,12 @@ final class CreateAction extends AbstractAction
             ], 406));
         }
 
-        if ($this->keyExists($key)) {
+        if ($this->storage->has($key)) {
             return $next($request, new JsonResponse([
                 'key' => $key,
                 'message' => "Key already exists.",
             ], 409));
         }
-
         $sanitizedValue = $this->sanitizeValue($value);
 
         $data = $this->storage->set($key, $sanitizedValue);
