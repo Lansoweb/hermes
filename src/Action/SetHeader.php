@@ -1,8 +1,8 @@
 <?php
 
-namespace Hermes\Action;
+namespace Demeter\Action;
 
-use Hermes\Storage\StorageInterface;
+use Demeter\Storage\StorageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Stratigility\MiddlewareInterface;
@@ -20,6 +20,6 @@ final class SetHeader implements MiddlewareInterface
     {
         $index = $this->storage->getIndex();
 
-        return $response->withAddedHeader('X-Hermes-Index', $index);
+        return $response->withAddedHeader('X-Demeter-Index', $index);
     }
 }

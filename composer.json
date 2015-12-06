@@ -1,5 +1,5 @@
 {
-  "name" : "los/hermes",
+  "name" : "mt-olympus/demeter",
   "require" : {
     "zendframework/zend-expressive" : "1.0.0rc2",
     "zendframework/zend-stdlib" : "~2.7",
@@ -14,19 +14,19 @@
   "license" : "MIT",
   "autoload-dev" : {
     "psr-4" : {
-      "HermesTest\\" : "test/"
+      "DemeterTest\\" : "test/"
     }
   },
   "autoload" : {
     "psr-4" : {
-      "Hermes\\" : "src/"
+      "Demeter\\" : "src/"
     }
   },
   "type" : "application",
   "scripts" : {
     "test" : [ "php vendor/squizlabs/php_codesniffer/scripts/phpcs", "php vendor/phpunit/phpunit/phpunit" ]
   },
-  "homepage" : "https://github.com/Lansoweb/hermes",
+  "homepage" : "https://github.com/mt-olympus/demeter",
   "authors" : [ {
     "name" : "Leandro Silva",
     "homepage" : "http://leandrosilva.info/"

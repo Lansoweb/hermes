@@ -1,6 +1,6 @@
 <?php
 
-use Hermes\Action\SetHeaderMiddleware;
+use Demeter\Action\SetHeader;
 
 return [
     // This can be used to seed pre- and/or post-routing middleware
@@ -21,7 +21,7 @@ return [
         // routing middleware
         'post_routing' => [
             [
-                'middleware' => SetHeaderMiddleware::class,
+                'middleware' => SetHeader::class,
             ]
             //[
             // Required:

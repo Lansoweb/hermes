@@ -2,8 +2,8 @@
 
 namespace AppTest\Action;
 
-use Hermes\Action\DeleteAction;
-use Hermes\Storage\StorageInterface;
+use Demeter\Action\DeleteAction;
+use Demeter\Storage\StorageInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 

@@ -1,7 +1,7 @@
 <?php
-namespace Hermes\Action;
+namespace Demeter\Action;
 
-use Hermes\Storage\FileStorage;
+use Demeter\Storage\FileStorage;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -21,7 +21,7 @@ class ConfigFactory implements AbstractFactoryInterface
             CreateAction::class,
             UpdateAction::class,
             DeleteAction::class,
-            SetHeaderMiddleware::class,
+            SetHeader::class,
         ]);
     }
 

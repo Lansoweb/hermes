@@ -1,8 +1,8 @@
 <?php
 
-namespace Hermes\Action;
+namespace Demeter\Action;
 
-use Hermes\Storage\StorageInterface;
+use Demeter\Storage\StorageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Stratigility\MiddlewareInterface;

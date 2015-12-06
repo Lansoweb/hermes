@@ -4,9 +4,9 @@ namespace AppTest\Action;
 
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
-use Hermes\Action\GetAction;
-use Hermes\Storage\StorageInterface;
-use Hermes\Action\SetHeader;
+use Demeter\Action\GetAction;
+use Demeter\Storage\StorageInterface;
+use Demeter\Action\SetHeader;
 
 class SetHeaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,6 +24,6 @@ class SetHeaderTest extends \PHPUnit_Framework_TestCase
             return $response;
         });
 
-        $this->assertSame('2', $response->getHeaderLine('X-Hermes-Index'));
+        $this->assertSame('2', $response->getHeaderLine('X-Demeter-Index'));
     }
 }

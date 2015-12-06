@@ -1,13 +1,13 @@
 <?php
 namespace AppTest\Action;
 
-use Hermes\Action\GetAction;
-use Hermes\Action\ConfigFactory;
+use Demeter\Action\GetAction;
+use Demeter\Action\ConfigFactory;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\Config;
-use Hermes\Action\CreateAction;
-use Hermes\Action\DeleteAction;
-use Hermes\Action\UpdateAction;
+use Demeter\Action\CreateAction;
+use Demeter\Action\DeleteAction;
+use Demeter\Action\UpdateAction;
 
 class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {

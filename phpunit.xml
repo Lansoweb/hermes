@@ -8,7 +8,7 @@
          backupGlobals="true"
          backupStaticAttributes="false">
     <testsuites>
-        <testsuite name="Base Test Suite">
+        <testsuite name="Demeter Test Suite">
             <directory suffix="Test.php">./test</directory>
         </testsuite>
     </testsuites>

@@ -1,10 +1,10 @@
 <?php
-namespace Hermes\Storage;
+namespace Demeter\Storage;
 
 final class FileStorage implements StorageInterface
 {
 
-    const INDEX_FILE = '_hermes.idx';
+    const INDEX_FILE = '_demeter.idx';
 
     private $baseDir = 'data/keys';
 
@@ -36,7 +36,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::get()
+     * @see \Demeter\Storage\StorageInterface::get()
      */
     public function get($key)
     {
@@ -49,7 +49,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::has()
+     * @see \Demeter\Storage\StorageInterface::has()
      */
     public function has($key)
     {
@@ -62,7 +62,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::set()
+     * @see \Demeter\Storage\StorageInterface::set()
      */
     public function set($key, $value)
     {
@@ -96,7 +96,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::getIndex()
+     * @see \Demeter\Storage\StorageInterface::getIndex()
      */
     public function getIndex()
     {
@@ -111,7 +111,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::incrementIndex()
+     * @see \Demeter\Storage\StorageInterface::incrementIndex()
      */
     public function incrementIndex()
     {
@@ -138,7 +138,7 @@ final class FileStorage implements StorageInterface
      *
      * {@inheritDoc}
      *
-     * @see \Hermes\Storage\StorageInterface::delete()
+     * @see \Demeter\Storage\StorageInterface::delete()
      */
     public function delete($key)
     {

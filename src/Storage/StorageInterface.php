@@ -1,5 +1,5 @@
 <?php
-namespace Hermes\Storage;
+namespace Demeter\Storage;
 
 interface StorageInterface
 {

@@ -2,8 +2,8 @@
 
 namespace AppTest\Action;
 
-use Hermes\Action\CreateAction;
-use Hermes\Storage\StorageInterface;
+use Demeter\Action\CreateAction;
+use Demeter\Storage\StorageInterface;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;

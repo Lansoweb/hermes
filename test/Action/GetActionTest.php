@@ -4,8 +4,8 @@ namespace AppTest\Action;
 
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
-use Hermes\Action\GetAction;
-use Hermes\Storage\StorageInterface;
+use Demeter\Action\GetAction;
+use Demeter\Storage\StorageInterface;
 
 class GetActionTest extends \PHPUnit_Framework_TestCase
 {
