@@ -4,6 +4,7 @@ namespace Demeter\Action;
 use Demeter\Storage\FileStorage;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Demeter\Storage\PdoStorage;
 
 class ConfigFactory implements AbstractFactoryInterface
 {
@@ -33,7 +34,24 @@ class ConfigFactory implements AbstractFactoryInterface
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $storage = new FileStorage();
+        $config = $serviceLocator->get('config');
+
+        if (!isset($config['demeter']) || !isset($config['demeter']['storage'])) {
+            throw new \InvalidArgumentException("Missing configuration options");
+        }
+
+        $demeterConfig = $config['demeter'];
+        if ($demeterConfig['storage']['type'] == 'pdo') {
+            $dsn = $demeterConfig['storage']['dsn'];
+            $username = $demeterConfig['storage']['username'];
+            $password = $demeterConfig['storage']['password'];
+            $db = new \PDO($dsn,$username,$password);
+            $storage = new PdoStorage($db);
+        } else {
+            $dir = $demeterConfig['storage']['dir'];
+            $storage = new FileStorage($dir);
+        }
+
         return new $requestedName($storage);
     }
 }
