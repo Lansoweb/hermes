@@ -1,4 +1,4 @@
-# Hermes
+# Demeter
 
 UNDER DEVELOPMENT!
 
@@ -10,5 +10,5 @@ It's goal is to provide configuration via REST API to distributed systems, like 
 
  You can fetch the configurations directly or using one of the client libraries.
  
- The client library is [Hermes-Client](https://github.com/mt-olympus/hermes-client) and there will be framework-specific implmentations in the future.
+ You can use [Hermes](https://github.com/mt-olympus/hermes) as client, or directly via REST calls.
  
